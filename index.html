@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shehroz for Leads — Real Estate Performance Marketer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04040f;
+  --bg2: #080818;
+  --bg3: #0d0d28;
+  --cyan: #00f5ff;
+  --violet: #bf00ff;
+  --pink: #ff0080;
+  --green: #00ff88;
+  --gold: #ffcc00;
+  --white: #ffffff;
+  --muted: #6666aa;
+  --border: rgba(0,245,255,0.12);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom Cursor */
+.cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, background 0.2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+  opacity: 0.5;
+}
+
+/* Noise Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(4,4,15,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--cyan);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  background: transparent;
+  cursor: none;
+}
+.nav-cta:hover {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: 0 0 30px rgba(0,245,255,0.4);
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 120px 60px 80px;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--cyan);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 9vw, 130px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.hero-title .line1 { color: var(--white); display: block; }
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-title .line3 { color: var(--white); display: block; }
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 40px;
+  max-width: 480px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+.hero-sub span { color: var(--cyan); font-weight: 600; }
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+.btn-primary:hover { box-shadow: 0 0 40px rgba(0,245,255,0.5); transform: translateY(-2px); }
+.btn-secondary {
+  padding: 16px 40px;
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: none;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* Hero Visual */
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-card {
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(135deg, var(--bg3), var(--bg2));
+  border: 1px solid var(--border);
+  padding: 40px;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+.hero-card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.hero-stat {
+  background: rgba(0,245,255,0.05);
+  border: 1px solid var(--border);
+  padding: 20px;
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.2);
+  padding: 14px 18px;
+}
+.badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.badge-text { font-size: 13px; color: var(--green); font-weight: 600; letter-spacing: 1px; }
+
+/* Hero BG Effects */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+.orb1 {
+  width: 500px; height: 500px;
+  background: rgba(0,245,255,0.08);
+  top: -100px; right: -100px;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.orb2 {
+  width: 400px; height: 400px;
+  background: rgba(191,0,255,0.07);
+  bottom: -100px; left: -50px;
+  animation: orbFloat 10s ease-in-out infinite reverse;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0); }
+  50% { transform: translate(30px, -30px); }
+}
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Scroll Indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+.scroll-text {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(180deg, var(--cyan), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* SECTIONS common */
+section { position: relative; z-index: 2; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.section-pad { padding: 120px 0; }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--cyan);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 0.95;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+.section-title .neon {
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.section-desc { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.8; }
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 0;
+}
+
+/* ABOUT */
+#about { background: var(--bg2); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-visual {
+  position: relative;
+}
+.about-img-box {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, var(--bg3), #12122a);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-img-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+}
+.about-monogram {
+  font-family: var(--font-display);
+  font-size: 180px;
+  background: linear-gradient(135deg, rgba(0,245,255,0.15), rgba(191,0,255,0.15));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  user-select: none;
+}
+.about-tag-floating {
+  position: absolute;
+  bottom: 30px;
+  right: -20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 16px 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+.about-tag-floating::before {
+  content: '';
+  display: block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  margin-bottom: 6px;
+}
+.about-content h2 { margin-bottom: 24px; }
+.about-content p { color: var(--muted); margin-bottom: 16px; line-height: 1.9; font-size: 17px; }
+.about-content p span { color: var(--white); font-weight: 600; }
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.skill-chip {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.skill-chip:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,245,255,0.05);
+}
+
+/* SERVICES */
+#services { background: var(--bg); }
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.service-card {
+  background: var(--bg2);
+  padding: 44px 36px;
+  position: relative;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.service-card:nth-child(1)::before { background: var(--cyan); }
+.service-card:nth-child(2)::before { background: var(--violet); }
+.service-card:nth-child(3)::before { background: var(--pink); }
+.service-card:nth-child(4)::before { background: var(--green); }
+.service-card:nth-child(5)::before { background: var(--gold); }
+.service-card:nth-child(6)::before { background: var(--cyan); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover { background: var(--bg3); }
+.service-icon {
+  font-size: 36px;
+  margin-bottom: 20px;
+  display: block;
+}
+.service-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--border);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+.service-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+.service-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* STATS */
+#stats {
+  background: linear-gradient(135deg, var(--bg2), var(--bg3));
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat-item {
+  text-align: center;
+  padding: 40px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+.stat-suffix {
+  font-family: var(--font-display);
+  font-size: 40px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.stat-desc {
+  font-size: 13px;
+  color: rgba(102,102,170,0.6);
+  margin-top: 6px;
+}
+
+/* CASE STUDIES */
+#cases { background: var(--bg2); }
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 60px;
+}
+.case-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 44px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.case-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,245,255,0.03), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.case-card:hover::after { opacity: 1; }
+.case-card:hover { border-color: rgba(0,245,255,0.25); transform: translateY(-4px); }
+.case-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  border: 1px solid rgba(0,245,255,0.2);
+  background: rgba(0,245,255,0.05);
+}
+.case-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+.case-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.case-results {
+  display: flex;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.case-result-item { text-align: left; }
+.case-result-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+}
+.case-result-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.case-card.featured {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.case-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+}
+
+/* TESTIMONIALS */
+#testimonials { background: var(--bg); }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.testimonial-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 36px;
+  position: relative;
+  transition: all 0.3s;
+}
+.testimonial-card:hover {
+  border-color: rgba(0,245,255,0.2);
+  transform: translateY(-4px);
+}
+.quote-mark {
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 0.6;
+  color: rgba(0,245,255,0.15);
+  margin-bottom: 20px;
+  display: block;
+}
+.testimonial-text {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.85;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.testimonial-divider {
+  width: 40px; height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+  margin-bottom: 20px;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.author-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--bg);
+  flex-shrink: 0;
+}
+.author-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--white);
+  line-height: 1.2;
+}
+.author-role {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+}
+.stars { color: var(--gold); font-size: 13px; margin-bottom: 16px; letter-spacing: 3px; }
+
+/* FAQ */
+#faq { background: var(--bg2); }
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 60px;
+  align-items: start;
+}
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 24px 0;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.2s;
+}
+.faq-question:hover { color: var(--cyan); }
+.faq-icon {
+  width: 24px; height: 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--cyan);
+  flex-shrink: 0;
+  transition: transform 0.3s;
+  font-style: normal;
+}
+.faq-answer {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s;
+}
+.faq-answer.open {
+  max-height: 300px;
+  padding-bottom: 24px;
+}
+.faq-item.active .faq-icon { transform: rotate(45deg); }
+.faq-side {
+  position: sticky;
+  top: 100px;
+}
+.faq-highlight {
+  background: linear-gradient(135deg, var(--bg3), #12122a);
+  border: 1px solid var(--border);
+  padding: 40px;
+  position: relative;
+}
+.faq-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+.faq-highlight h3 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.faq-highlight p { color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 28px; }
+
+/* CONTACT */
+#contact {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+#contact::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(ellipse, rgba(0,245,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.contact-inner {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.contact-inner .section-label { justify-content: center; }
+.contact-inner .section-label::before { display: none; }
+.contact-title {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 8vw, 110px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.contact-sub { color: var(--muted); font-size: 18px; line-height: 1.8; margin-bottom: 48px; }
+.contact-methods {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  cursor: none;
+}
+.contact-method:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,245,255,0.05);
+}
+.contact-method span { font-size: 20px; }
+.contact-cta-big {
+  display: inline-block;
+  padding: 22px 64px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: none;
+}
+.contact-cta-big:hover {
+  box-shadow: 0 0 60px rgba(0,245,255,0.5), 0 0 120px rgba(191,0,255,0.3);
+  transform: translateY(-3px);
+}
+
+/* FOOTER */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--cyan); }
+
+/* Animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .container { padding: 0 24px; }
+  .hero-grid, .about-grid, .services-header, .faq-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .case-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  #hero { padding: 100px 24px 60px; }
+  .hero-visual { display: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">SHEHROZ</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#stats">Results</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-grid">
+    <div class="hero-content fade-up">
+      <div class="hero-tag">Real Estate Performance Marketer</div>
+      <h1 class="hero-title">
+        <span class="line1">I GENERATE</span>
+        <span class="line2">LEADS</span>
+        <span class="line3">THAT CLOSE.</span>
+      </h1>
+      <p class="hero-sub">
+        4+ years helping real estate companies fill their pipelines with <span>qualified buyers & sellers</span> through data-driven paid campaigns.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Let's Work Together</a>
+        <a href="#cases" class="btn-secondary">See My Work</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up">
+      <div class="hero-card">
+        <div class="hero-card-tag">// Live Performance Dashboard</div>
+        <div class="hero-stat-row">
+          <div class="hero-stat">
+            <div class="hero-stat-num">4+</div>
+            <div class="hero-stat-label">Years Exp.</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">50+</div>
+            <div class="hero-stat-label">Campaigns</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">3x</div>
+            <div class="hero-stat-label">Avg ROI</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">10+</div>
+            <div class="hero-stat-label">Clients</div>
+          </div>
+        </div>
+        <div class="hero-badge">
+          <div class="badge-dot"></div>
+          <div class="badge-text">Available for New Projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-text">Scroll</div>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container section-pad">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="about-img-box">
+          <div class="about-monogram">SFL</div>
+        </div>
+        <div class="about-tag-floating">
+          Performance Marketer<br>Dubai / Remote
+        </div>
+      </div>
+      <div class="about-content fade-up">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">THE PERSON<br><span class="neon">BEHIND THE</span><br>LEADS</h2>
+        <p>I'm <span>Shehroz</span> — a full-time freelance performance marketer specializing exclusively in <span>real estate lead generation</span>. Over the past 4+ years, I've partnered with brokerages, developers, and agents who are serious about growth.</p>
+        <p>I don't just run ads. I build <span>end-to-end lead systems</span> — from creative strategy and audience targeting to landing page optimization and lead nurturing — so every dirham you spend works harder.</p>
+        <p>My clients don't pay for clicks. They pay for <span>qualified conversations that close deals</span>.</p>
+        <div class="about-skills">
+          <span class="skill-chip">Meta Ads</span>
+          <span class="skill-chip">Google Ads</span>
+          <span class="skill-chip">TikTok Ads</span>
+          <span class="skill-chip">Lead Funnels</span>
+          <span class="skill-chip">CRM Setup</span>
+          <span class="skill-chip">A/B Testing</span>
+          <span class="skill-chip">Analytics</span>
+          <span class="skill-chip">Retargeting</span>
+          <span class="skill-chip">Copywriting</span>
+          <span class="skill-chip">Real Estate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container section-pad">
+    <div class="services-header">
+      <div>
+        <div class="section-label">What I Do</div>
+        <h2 class="section-title">SERVICES<br><span class="neon">THAT</span><br>DELIVER</h2>
+      </div>
+      <p class="section-desc">Every service is built around one objective: bringing your real estate company qualified leads that convert into closed deals — not vanity metrics.</p>
+    </div>
+    <div class="services-grid fade-up">
+      <div class="service-card">
+        <span class="service-icon">🎯</span>
+        <div class="service-num">01</div>
+        <div class="service-name">LEAD GENERATION</div>
+        <div class="service-desc">Full-funnel paid campaigns on Meta & Google designed specifically for real estate buyers and sellers. Every lead is qualified and ready to talk.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📱</span>
+        <div class="service-num">02</div>
+        <div class="service-name">META ADS</div>
+        <div class="service-desc">Facebook & Instagram campaigns with laser-focused targeting, high-converting creatives, and continuous optimization to lower your cost per lead.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔍</span>
+        <div class="service-num">03</div>
+        <div class="service-name">GOOGLE ADS</div>
+        <div class="service-desc">Search, Display & Performance Max campaigns that capture high-intent buyers actively searching for properties right now.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">⚡</span>
+        <div class="service-num">04</div>
+        <div class="service-name">FUNNEL STRATEGY</div>
+        <div class="service-desc">Landing pages, lead magnets, follow-up sequences, and CRM integration — the complete system that turns ad clicks into appointments.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📊</span>
+        <div class="service-num">05</div>
+        <div class="service-name">ANALYTICS & REPORTING</div>
+        <div class="service-desc">Clear, transparent reporting dashboards so you always know exactly what's working, what's not, and where every dirham is going.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔄</span>
+        <div class="service-num">06</div>
+        <div class="service-name">RETARGETING</div>
+        <div class="service-desc">Re-engage warm audiences who visited your listings but didn't convert. Turn browsers into buyers with strategic retargeting campaigns.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid fade-up">
+      <div class="stat-item">
+        <div class="stat-number">4<span class="stat-suffix">+</span></div>
+        <div class="stat-label">Years Experience</div>
+        <div class="stat-desc">In real estate digital marketing</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">50<span class="stat-suffix">+</span></div>
+        <div class="stat-label">Campaigns Launched</div>
+        <div class="stat-desc">Across Meta, Google & TikTok</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3<span class="stat-suffix">x</span></div>
+        <div class="stat-label">Average ROI</div>
+        <div class="stat-desc">Return on ad spend for clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10<span class="stat-suffix">+</span></div>
+        <div class="stat-label">Happy Clients</div>
+        <div class="stat-desc">Real estate brokerages & agents</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASE STUDIES -->
+<section id="cases">
+  <div class="container section-pad">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">REAL <span class="neon">RESULTS</span><br>REAL DEALS</h2>
+    <div class="cases-grid fade-up">
+      <div class="case-card featured">
+        <div>
+          <div class="case-tag">⭐ Featured Case Study</div>
+          <h3 class="case-title">LUXURY BROKERAGE — DUBAI MARINA</h3>
+          <p class="case-desc">A luxury brokerage was struggling with high cost-per-lead and poor quality inquiries. I redesigned their entire Meta Ads strategy, built a dedicated landing funnel, and implemented a retargeting sequence. Within 60 days, the results were transformational.</p>
+        </div>
+        <div>
+          <div class="case-results">
+            <div class="case-result-item">
+              <div class="case-result-num">68%</div>
+              <div class="case-result-label">↓ Cost Per Lead</div>
+            </div>
+            <div class="case-result-item">
+              <div class="case-result-num">4.2x</div>
+              <div class="case-result-label">ROAS Achieved</div>
+            </div>
+            <div class="case-result-item">
+              <div class="case-result-num">340</div>
+              <div class="case-result-label">Leads / Month</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">🏢 Off-Plan Developer</div>
+        <h3 class="case-title">OFF-PLAN LAUNCH CAMPAIGN</h3>
+        <p class="case-desc">Generated 500+ qualified leads for a new project launch in Jumeirah using a combination of Google Search and Meta Ads within 30 days of campaign go-live.</p>
+        <div class="case-results">
+          <div class="case-result-item">
+            <div class="case-result-num">500+</div>
+            <div class="case-result-label">Leads Generated</div>
+          </div>
+          <div class="case-result-item">
+            <div class="case-result-num">30</div>
+            <div class="case-result-label">Days Campaign</div>
+          </div>
+          <div class="case-result-item">
+            <div class="case-result-num">22%</div>
+            <div class="case-result-label">Lead-to-Meeting</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">🏠 Real Estate Agent</div>
+        <h3 class="case-title">SOLO AGENT SCALE-UP</h3>
+        <p class="case-desc">Helped an independent real estate agent build a personal brand and lead gen system from scratch, going from 0 to 80+ monthly leads within 3 months.</p>
+        <div class="case-results">
+          <div class="case-result-item">
+            <div class="case-result-num">80+</div>
+            <div class="case-result-label">Leads / Month</div>
+          </div>
+          <div class="case-result-item">
+            <div class="case-result-num">3x</div>
+            <div class="case-result-label">ROI in 90 Days</div>
+          </div>
+          <div class="case-result-item">
+            <div class="case-result-num">AED 45</div>
+            <div class="case-result-label">Cost Per Lead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container section-pad">
+    <div class="section-label">Client Reviews</div>
+    <h2 class="section-title">WHAT CLIENTS<br><span class="neon">SAY ABOUT</span><br>THE WORK</h2>
+    <div class="testimonials-grid fade-up">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Shehroz completely transformed our lead generation. Before him, we were wasting budget on unqualified inquiries. Now we get serious buyers who actually want to close. Best investment we made this year.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-author">
+          <div class="author-avatar">AK</div>
+          <div>
+            <div class="author-name">Ahmed K.</div>
+            <div class="author-role">MD — Dubai Real Estate Brokerage</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">We worked with multiple agencies before and never got consistent results. Shehroz is different — he actually understands real estate, not just marketing. Our cost per lead dropped by more than half.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-author">
+          <div class="author-avatar">SR</div>
+          <div>
+            <div class="author-name">Sara R.</div>
+            <div class="author-role">Sales Director — Property Developer</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">As a solo agent, I couldn't afford a big agency. Shehroz gave me an enterprise-level lead system at a freelancer price. I went from struggling to fully booked within 3 months. Highly recommend.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-author">
+          <div class="author-avatar">MF</div>
+          <div>
+            <div class="author-name">Mohammed F.</div>
+            <div class="author-role">Independent Real Estate Agent</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container section-pad">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">COMMON<br><span class="neon">QUESTIONS</span></h2>
+    <div class="faq-grid">
+      <div class="faq-list fade-up">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How quickly can I expect to see results?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">Most clients start seeing leads within the first 7–14 days of campaign launch. However, full optimization typically takes 30–60 days as we gather data and refine targeting for your specific market and audience.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What's the minimum ad budget required?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">I recommend a minimum ad spend of AED 3,000–5,000/month to generate meaningful results. Lower budgets can work but limit the speed of optimization and volume of leads generated.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you work with both agents and brokerages?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">Yes. I work with solo agents, boutique brokerages, large real estate companies, and off-plan property developers. My strategies are tailored to your specific scale and goals.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Are you exclusive — or do you work with competitors?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">I maintain strict client exclusivity within the same geographic area and property type. Your strategy, audiences, and creatives are never shared with competitors.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do we get started?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">Send me a message via the contact section below. We'll book a free 30-minute strategy call to understand your goals, current situation, and whether we're a good fit. If we are — we move fast.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What platforms do you run ads on?
+            <i class="faq-icon">+</i>
+          </button>
+          <div class="faq-answer">Primarily Meta (Facebook & Instagram) and Google Ads (Search, Display, YouTube). I also run TikTok Ads when it fits the property type and target audience. Platform selection depends on your goals and budget.</div>
+        </div>
+      </div>
+      <div class="faq-side fade-up">
+        <div class="faq-highlight">
+          <div class="section-label">Still unsure?</div>
+          <h3>LET'S TALK STRATEGY</h3>
+          <p>I offer a free 30-minute consultation where I'll analyze your current marketing, identify gaps, and outline exactly what I'd do differently. No obligation, no pitch — just value.</p>
+          <a href="#contact" class="btn-primary" style="display:inline-block;">Book Free Call</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container section-pad">
+    <div class="contact-inner fade-up">
+      <div class="section-label">Contact</div>
+      <h2 class="contact-title">LET'S<br><span style="background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;">BUILD</span><br>TOGETHER</h2>
+      <p class="contact-sub">Ready to stop losing deals to bad leads? Let's build a system that brings qualified buyers and sellers directly to you — consistently.</p>
+      <div class="contact-methods">
+        <a href="mailto:shehroz@leads.com" class="contact-method"><span>✉️</span> Email Me</a>
+        <a href="https://wa.me/971000000000" class="contact-method"><span>💬</span> WhatsApp</a>
+        <a href="https://linkedin.com/in/shehroz" class="contact-method"><span>💼</span> LinkedIn</a>
+      </div>
+      <a href="mailto:shehroz@leads.com" class="contact-cta-big">START THE CONVERSATION →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SHEHROZ FOR LEADS</div>
+  <div class="footer-copy">© 2026 Shehroz for Leads. All rights reserved.</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+// Custom Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .service-card, .testimonial-card, .case-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    cursor.style.background = 'var(--violet)';
+    ring.style.width = '60px';
+    ring.style.height = '60px';
+    ring.style.borderColor = 'var(--violet)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.background = 'var(--cyan)';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+    ring.style.borderColor = 'var(--cyan)';
+  });
+});
+
+// Scroll Fade-Up
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 100);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// FAQ Toggle
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    item.classList.add('active');
+  }
+}
+
+// Nav Active on Scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 100;
+  sections.forEach(s => {
+    if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.style.color = '';
+        if (a.getAttribute('href') === '#' + s.id) a.style.color = 'var(--cyan)';
+      });
+    }
+  });
+});
+
+// Animate stats on scroll
+function animateCount(el, target, suffix) {
+  let start = 0;
+  const duration = 2000;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('.stat-number');
+      nums.forEach(num => {
+        const text = num.textContent;
+        const match = text.match(/(\d+)/);
+        if (match) {
+          const val = parseInt(match[1]);
+          const suffix = text.replace(match[0], '').trim();
+          animateCount(num, val, '');
+          const suf = num.querySelector('.stat-suffix');
+          if (suf) setTimeout(() => { num.innerHTML = val + '<span class="stat-suffix">' + suffix + '</span>'; }, 2000);
+        }
+      });
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObserver.observe(statsSection);
+</script>
+</body>
+</html>
